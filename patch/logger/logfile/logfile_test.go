@@ -61,6 +61,6 @@ func TestNewLogFile_Split(t *testing.T) {
 	for i, entry := range lst {
 		data, err := os.ReadFile("test/" + entry.Name())
 		assert.Nil(t, err)
-		assert.Equal(t, expected[i], string(data))
+		assert.Equalf(t, expected[i], string(data), "%s", entry.Name())
 	}
 }
