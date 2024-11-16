@@ -4,9 +4,8 @@ import (
 	"fmt"
 	"github.com/stretchr/testify/assert"
 	"os"
-	"slices"
+	"sort"
 	"testing"
-	"time"
 )
 
 func TestNewLogFile(t *testing.T) {
@@ -34,18 +33,15 @@ func TestNewLogFile_Split(t *testing.T) {
 	fileName := "./test/test.log"
 	f, err := NewLogFile(fileName, WithSplit(4))
 	assert.Nil(t, err)
-	time.Sleep(time.Nanosecond * 10)
 
 	data := []byte("test")
 	_, err = f.Write(data)
 	assert.Nil(t, err)
 
-	time.Sleep(time.Nanosecond * 10)
 	data = []byte("test test")
 	_, err = f.Write(data)
 	assert.Nil(t, err)
 
-	time.Sleep(time.Nanosecond * 10)
 	data = []byte("tes")
 	_, err = f.Write(data)
 	assert.Nil(t, err)
@@ -53,7 +49,6 @@ func TestNewLogFile_Split(t *testing.T) {
 	_, err = f.Write(data)
 	assert.Nil(t, err)
 
-	time.Sleep(time.Nanosecond * 10)
 	data = []byte("111")
 	_, err = f.Write(data)
 	assert.Nil(t, err)
@@ -61,20 +56,17 @@ func TestNewLogFile_Split(t *testing.T) {
 	lst, err := os.ReadDir("./test")
 	assert.Nil(t, err)
 
-	slices.SortFunc(lst, func(a, b os.DirEntry) int {
-		infoA, err := a.Info()
+	sort.Slice(lst, func(i, j int) bool {
+		infoA, err := lst[i].Info()
 		assert.Nil(t, err)
-		infoB, err := b.Info()
+		infoB, err := lst[j].Info()
 		assert.Nil(t, err)
-		fmt.Println(infoA.ModTime(), infoB.ModTime(), infoA.Name(), infoB.Name())
-		if infoA.ModTime().Before(infoB.ModTime()) {
-			return -1
-		} else if infoA.ModTime().After(infoB.ModTime()) {
-			return 1
-		} else {
-			return 0
-		}
+		return infoA.ModTime().Before(infoB.ModTime())
 	})
+
+	for _, entry := range lst {
+		fmt.Printf("%s\n", entry.Name())
+	}
 
 	expected := []string{"test", "test test", "testest", "111"}
 	for i, entry := range lst {
