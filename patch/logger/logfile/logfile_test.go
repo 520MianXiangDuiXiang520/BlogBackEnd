@@ -1,7 +1,6 @@
 package logfile
 
 import (
-	"JuneBlog/patch/tools"
 	"fmt"
 	"github.com/stretchr/testify/assert"
 	"os"
@@ -65,7 +64,14 @@ func TestNewLogFile_Split(t *testing.T) {
 	}
 
 	sort.Slice(infos, func(i, j int) bool {
-		return tools.GetFileLastChangeTime(infos[i]) < tools.GetFileLastChangeTime(infos[j])
+		// 文件没有关闭 在某些系统上拿到的最后修改时间不准确
+		if infos[i].Name() == "test.log" {
+			return false
+		}
+		if infos[j].Name() == "test.log" {
+			return true
+		}
+		return infos[i].ModTime().Before(infos[j].ModTime())
 	})
 
 	for _, entry := range infos {
