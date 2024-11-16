@@ -5,6 +5,7 @@ DEPLOY_DIR := $(PWD)/deployment
 BUILD_DIR := $(PWD)/bin
 BINARY_NAME := juneblog
 GO_FLAGS := -trimpath -ldflags "-s -w"
+GIT_SHA := $(shell git rev-parse --short HEAD)
 
 .PHONY: all build clean clean_db build_docker lint test
 
@@ -31,7 +32,7 @@ clean:
 clean_db:
 	@bash $(SCRIPTS_DIR)/clean_db.sh
 
-build_docker:
-	@bash $(DEPLOY_DIR)/docker/docker_build.sh $(SHA)
+build_docker_base:
+	@bash $(DEPLOY_DIR)/docker/docker_build.sh $(GIT_SHA) $(USERNAME) $(PASSWORD) $(NAMESPACE)
 
 .DEFAULT_GOAL := all
