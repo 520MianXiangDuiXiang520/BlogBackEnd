@@ -14,7 +14,7 @@ all: build
 build:
 	@mkdir -p $(BUILD_DIR)
 	@echo "Building $(BINARY_NAME)..."
-	@CGO_ENABLED=0 go build $(GO_FLAGS) -o $(BUILD_DIR)/$(BINARY_NAME) ./cmd/main.go
+	@CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build $(GO_FLAGS) -o $(BUILD_DIR)/$(BINARY_NAME) ./cmd/main.go
 	@echo "Build complete: $(BUILD_DIR)/$(BINARY_NAME)"
 
 lint:
