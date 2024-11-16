@@ -10,7 +10,7 @@ on:
     branches: [ "main" ]
 
 env:
-  REGISTRY: dockerhub.io
+  REGISTRY: docker.io
   IMAGE_NAME: blogapi
 
 jobs:
