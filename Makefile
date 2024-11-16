@@ -32,6 +32,6 @@ clean_db:
 	@bash $(SCRIPTS_DIR)/clean_db.sh
 
 build_docker:
-	@bash $(DEPLOY_DIR)/docker/docker_build.sh
+	@bash $(DEPLOY_DIR)/docker/docker_build.sh $(SHA)
 
 .DEFAULT_GOAL := all

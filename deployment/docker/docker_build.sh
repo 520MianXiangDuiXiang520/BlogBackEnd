@@ -11,7 +11,7 @@ function buildBase() {
             return 0
         fi
     fi
-    tagName="blog_base:$(date '+%Y_%m_%d_%I_%M_%S')"
+    tagName="blog_base:$1"
     tagNameLaster="blog_base:latest"
     if docker build -f ./deployment/docker/base.Dockerfile -t "$tagNameLaster" -t "$tagName" .; then
         echo "$localBaseHash" >$tmpF
@@ -23,8 +23,24 @@ function buildBase() {
 }
 
 function build() {
-    docker build -f ./deployment/docker/dockerfile -t blogapi .
+    docker build -f ./deployment/docker/dockerfile -t "blogapi:$1" -t "blogapi:latest" .
 }
 
-buildBase
-build
+SHA="$1"
+if [ -z "$SHA" ]; then
+  SHA="$(git rev-parse --short HEAD)"
+fi
+DOCKERHUB_USERNAME="$2"
+DOCKERHUB_PASSWORD="$3"
+
+docker login -u "$DOCKERHUB_USERNAME" -p "$DOCKERHUB_PASSWORD"
+if [ $? -ne 0 ]; then
+    echo "Login to Docker Hub file: $DOCKERHUB_USERNAME"
+    exit 1
+fi
+
+
+echo "$SHA"
+
+buildBase "$SHA"
+build "$SHA"
