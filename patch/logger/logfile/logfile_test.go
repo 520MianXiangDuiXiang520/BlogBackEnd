@@ -1,11 +1,11 @@
 package logfile
 
 import (
+	"JuneBlog/patch/tools"
 	"fmt"
 	"github.com/stretchr/testify/assert"
 	"os"
 	"sort"
-	"syscall"
 	"testing"
 )
 
@@ -21,12 +21,6 @@ func TestNewLogFile(t *testing.T) {
 	assert.Equal(t, readData, data)
 	err = os.Remove(fileName)
 	assert.Nil(t, err)
-}
-
-func GetFileLastChangeTime(info os.FileInfo) int64 {
-	t := info.Sys().(*syscall.Stat_t).Mtimespec.Nano()
-	fmt.Println(t, info.ModTime().Nanosecond())
-	return t
 }
 
 func TestNewLogFile_Split(t *testing.T) {
@@ -71,7 +65,7 @@ func TestNewLogFile_Split(t *testing.T) {
 	}
 
 	sort.Slice(infos, func(i, j int) bool {
-		return GetFileLastChangeTime(infos[i]) < GetFileLastChangeTime(infos[j])
+		return tools.GetFileLastChangeTime(infos[i]) < tools.GetFileLastChangeTime(infos[j])
 	})
 
 	for _, entry := range infos {
