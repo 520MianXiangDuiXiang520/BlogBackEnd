@@ -12,7 +12,7 @@ function buildBase() {
         fi
     fi
 
-    if docker build -f ./deployment/docker/base.Dockerfile -t "$TAG_NAME_SHA" -t "$TAG_NAME_LATEST" .; then
+    if docker buildx build --platform linux/amd64 -f ./deployment/docker/base.Dockerfile -t "$TAG_NAME_SHA" -t "$TAG_NAME_LATEST" .; then
         echo "$localBaseHash" >$tmpF
         printf "base image build success: %s" "$TAG_NAME_SHA"
     else
