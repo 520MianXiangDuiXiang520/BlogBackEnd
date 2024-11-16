@@ -62,10 +62,18 @@ func TestNewLogFile_Split(t *testing.T) {
 	assert.Nil(t, err)
 
 	slices.SortFunc(lst, func(a, b os.DirEntry) int {
-		infoA, _ := a.Info()
-		infoB, _ := b.Info()
+		infoA, err := a.Info()
+		assert.Nil(t, err)
+		infoB, err := b.Info()
+		assert.Nil(t, err)
 		fmt.Println(infoA.ModTime(), infoB.ModTime(), infoA.Name(), infoB.Name())
-		return infoA.ModTime().Nanosecond() - infoB.ModTime().Nanosecond()
+		if infoA.ModTime().Before(infoB.ModTime()) {
+			return -1
+		} else if infoA.ModTime().After(infoB.ModTime()) {
+			return 1
+		} else {
+			return 0
+		}
 	})
 
 	expected := []string{"test", "test test", "testest", "111"}
