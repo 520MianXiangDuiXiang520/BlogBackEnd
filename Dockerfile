@@ -2,7 +2,6 @@ FROM junebao857/blog_base:main AS builder
 
 WORKDIR /build
 COPY . .
-RUN pwd
 RUN make
 
 FROM ubuntu:20.04 AS run
