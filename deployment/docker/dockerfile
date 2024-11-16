@@ -1,0 +1,19 @@
+FROM blog_base AS builder
+
+WORKDIR /build
+COPY . .
+RUN make
+
+FROM ubuntu:20.04 AS run
+WORKDIR /app
+# RUN apk update \
+#     && apk add tzdata \
+#     && cp /usr/share/zoneinfo/Asia/Shanghai /etc/localtime \
+#     && echo "Asia/Shanghai" > /etc/timezone \
+
+ENV CFG_PATH /data/juneblog/config
+ENV LOG_PATH /data/juneblog/log
+COPY --from=builder /build/cmd/juneblog /app/
+EXPOSE 8080 2998
+CMD pwd
+ENTRYPOINT ["/app/juneblog"]

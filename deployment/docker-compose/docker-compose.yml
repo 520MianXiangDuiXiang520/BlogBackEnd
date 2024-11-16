@@ -1,0 +1,26 @@
+version: '3.6'
+services:
+  mongodb:
+    container_name: mongo
+    image: mongo
+    ports:
+      - "27017:27017"
+    restart: always
+    volumes:
+      - ~/Data/JuneBlog/data/mongo:/data/db
+      - ~/Data/JuneBlog/config/mongod.conf:/etc/mongod.conf
+      - ~/Data/JuneBlog/log/mongo:/var/log/mongodb
+    command: -config /etc/mongod.conf
+
+  blog_server:
+    container_name: blog_server
+    build:
+      context: ../../
+      dockerfile: deployment/docker/Dockerfile
+    ports:
+      - "8080:8080"
+    restart: always
+    volumes:
+      - ~/Data/JuneBlog/config/config.json:/data/juneblog/config.json
+    depends_on:
+      - mongodb

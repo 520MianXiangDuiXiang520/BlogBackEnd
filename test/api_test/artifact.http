@@ -1,0 +1,26 @@
+GET http://localhost:8080/article/list?page=0&page_size=20
+
+###
+
+GET http://localhost:8080/article/detail/28
+
+###
+
+POST http://localhost:8080/article/new
+Content-Type: application/json
+
+{
+  "title": "[译] Bounds Check Elimination 边界检查消除",
+  "text": "vv",
+  "abstract": "abs"
+}
+
+###
+
+POST http://localhost:8080/api/auth/login
+Content-Type: application/json
+
+{
+  "username": "zjb",
+  "password": "123"
+}
