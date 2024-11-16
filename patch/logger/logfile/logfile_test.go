@@ -56,20 +56,23 @@ func TestNewLogFile_Split(t *testing.T) {
 	lst, err := os.ReadDir("./test")
 	assert.Nil(t, err)
 
-	sort.Slice(lst, func(i, j int) bool {
-		infoA, err := lst[i].Info()
+	infos := make([]os.FileInfo, 0)
+	for _, l := range lst {
+		info, err := l.Info()
 		assert.Nil(t, err)
-		infoB, err := lst[j].Info()
-		assert.Nil(t, err)
-		return infoA.ModTime().Before(infoB.ModTime())
+		infos = append(infos, info)
+	}
+
+	sort.Slice(infos, func(i, j int) bool {
+		return infos[i].ModTime().Before(infos[j].ModTime())
 	})
 
-	for _, entry := range lst {
+	for _, entry := range infos {
 		fmt.Printf("%s\n", entry.Name())
 	}
 
 	expected := []string{"test", "test test", "testest", "111"}
-	for i, entry := range lst {
+	for i, entry := range infos {
 		data, err := os.ReadFile("test/" + entry.Name())
 		assert.Nil(t, err)
 		assert.Equalf(t, expected[i], string(data), "%s", entry.Name())
