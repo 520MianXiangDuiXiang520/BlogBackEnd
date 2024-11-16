@@ -3,6 +3,7 @@ package config
 import (
 	"JuneBlog/patch/logger"
 	"encoding/json"
+	"fmt"
 	"os"
 	"sync"
 )
@@ -25,7 +26,8 @@ func InitConfig(path string) error {
 	once.Do(func() {
 		data, err := os.ReadFile(path)
 		if err != nil {
-			logger.Panic("read config fail", "path", path)
+			fmt.Println(err)
+			logger.Panic("read config fail", "path", path, "err", err)
 		}
 		cfg := NewConfig()
 		err = json.Unmarshal(data, cfg)

@@ -6,7 +6,7 @@ type ArticleHeader struct {
 	CreateTs int64   `json:"create_ts" bson:"create_ts,omitempty"`
 	UpdateTs int64   `json:"update_ts" bson:"update_ts,omitempty"`
 	TagIds   []int64 `json:"tag_ids" bson:"tag_ids,omitempty"`
-	Abstract string  `bson:"abstract" bson:"abstract,omitempty"`
+	Abstract string  `json:"abstract" bson:"abstract,omitempty"`
 }
 
 type Article struct {

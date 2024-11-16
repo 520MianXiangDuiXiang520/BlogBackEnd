@@ -96,7 +96,7 @@ func bindAndHandle[D constraints.Ordered, R any, S any](
 //	g.POST("api/item/:name", HandlerWithUrlStr("name", handler))
 func HandlerWithUrlStr[R any, S any](key string, handler HandlerFuncWithId[string, R, S]) func(c *gin.Context) {
 	return func(c *gin.Context) {
-		ctx := context.WithValue(context.Background(), "ctx", c)
+		ctx := WithGinCtx(context.Background(), c)
 		id := c.Param(key)
 		bindAndHandle[string, R, S](ctx, c, handler, id)
 	}

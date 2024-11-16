@@ -18,9 +18,9 @@ type LogFile struct {
 	path        string
 }
 
-func (l *LogFile) getPrefix() string {
-	return l.ctx.namePrefix
-}
+//func (l *LogFile) getPrefix() string {
+//	return l.ctx.namePrefix
+//}
 
 func NewLogFile(filePath string, opts ...Opt) (*LogFile, error) {
 	c := newDefaultCtx()

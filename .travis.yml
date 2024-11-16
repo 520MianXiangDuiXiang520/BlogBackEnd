@@ -1,0 +1,11 @@
+language: go
+go:
+  - '1.23'
+
+install:
+  - go install github.com/golangci/golangci-lint/cmd/golangci-lint@latest
+
+script:
+  - make lint
+  - make test
+  - make build

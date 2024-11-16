@@ -73,7 +73,7 @@ func (d *DbLogic) FindArticleCount(ctx context.Context, opts ...opt.Opt) (int, e
 	//	return n, nil
 	//}
 	// cache miss
-	return d.Storage().FindArticleCount(nil, opts...)
+	return d.Storage().FindArticleCount(ctx, opts...)
 }
 
 func (d *DbLogic) FindSomeArticleInfo(ctx context.Context, opts ...opt.Opt) ([]*module.ArticleHeader, error) {

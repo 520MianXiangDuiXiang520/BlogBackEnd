@@ -10,8 +10,7 @@ type optContext struct {
 	time       bool
 	source     bool
 
-	json      bool
-	splitSize int64
+	json bool
 }
 
 type Opt func(ctx *optContext)

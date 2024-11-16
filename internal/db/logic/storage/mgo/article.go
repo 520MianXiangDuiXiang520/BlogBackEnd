@@ -129,7 +129,7 @@ func (m *Mgo) UpdateArticle(ctx context.Context, id int64, article *module.Artic
 	filter := bson.M{"id": id}
 	now := utils.NowTs()
 	article.Header.UpdateTs = now
-	_, err := m.ArticleC().UpdateOne(ctx, filter, bson.D{{"$set", article}})
+	_, err := m.ArticleC().UpdateOne(ctx, filter, bson.D{{Key: "$set", Value: article}})
 	return HandleError(err)
 }
 

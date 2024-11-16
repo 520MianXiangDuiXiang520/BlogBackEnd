@@ -30,7 +30,7 @@ func TestNewLogFile_Split(t *testing.T) {
 	}()
 
 	fileName := "./test/test.log"
-	f, err := NewLogFile(fileName, WithSplit(4, "test"))
+	f, err := NewLogFile(fileName, WithSplit(4))
 	assert.Nil(t, err)
 
 	data := []byte("test")

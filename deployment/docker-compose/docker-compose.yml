@@ -3,6 +3,8 @@ services:
   mongodb:
     container_name: mongo
     image: mongo
+    expose:
+      - "27017"
     ports:
       - "27017:27017"
     restart: always
@@ -10,17 +12,26 @@ services:
       - ~/Data/JuneBlog/data/mongo:/data/db
       - ~/Data/JuneBlog/config/mongod.conf:/etc/mongod.conf
       - ~/Data/JuneBlog/log/mongo:/var/log/mongodb
+    healthcheck:
+      test: echo 'db.runCommand("ping").ok' | mongosh localhost:27017/test --quiet
+      interval: 10s
+      timeout: 10s
+      retries: 5
+      start_period: 40s
     command: -config /etc/mongod.conf
 
   blog_server:
     container_name: blog_server
-    build:
-      context: ../../
-      dockerfile: deployment/docker/Dockerfile
+    image: blogapi
     ports:
       - "8080:8080"
     restart: always
     volumes:
-      - ~/Data/JuneBlog/config/config.json:/data/juneblog/config.json
+      - ~/Data/JuneBlog/config:/data/juneblog/config/
+      - ~/Data/JuneBlog/log:/data/juneblog/log/
+    environment:
+      - CFG_PATH=/data/juneblog/config/config.json
+      - LOG_PATH=/data/juneblog/log
     depends_on:
-      - mongodb
+      mongodb:
+        condition: service_healthy

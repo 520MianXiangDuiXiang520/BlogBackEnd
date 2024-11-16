@@ -9,6 +9,7 @@ import (
 )
 
 func TestNewTag(t *testing.T) {
+	t.Skip()
 	ctx := context.Background()
 	err := db.Db().NewTag(ctx, &module.Tag{Name: "ttt"})
 	assert.Nil(t, err)

@@ -6,6 +6,12 @@ import (
 	"strconv"
 )
 
+type CtxKey string
+
+const (
+	CtxKeyGinCtx CtxKey = "ctx"
+)
+
 func ParamDefault(c *gin.Context, key string, def string) string {
 	v := c.Param(key)
 	if v == "" {
@@ -43,9 +49,9 @@ func QueryDefaultInt(c *gin.Context, key string, def int) int {
 }
 
 func WithGinCtx(ctx context.Context, ginCtx *gin.Context) context.Context {
-	return context.WithValue(ctx, "ctx", ginCtx)
+	return context.WithValue(ctx, CtxKeyGinCtx, ginCtx)
 }
 
 func GinCtx(ctx context.Context) *gin.Context {
-	return ctx.Value("ctx").(*gin.Context)
+	return ctx.Value(CtxKeyGinCtx).(*gin.Context)
 }
