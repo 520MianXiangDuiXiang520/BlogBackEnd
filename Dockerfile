@@ -1,4 +1,4 @@
-FROM junebao857/blog_base AS builder
+FROM junebao857/blog_base:main AS builder
 
 WORKDIR /build
 COPY . .
