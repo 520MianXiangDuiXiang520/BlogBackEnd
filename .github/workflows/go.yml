@@ -26,8 +26,10 @@ jobs:
     - name: Test
       run: make test
 
-    - name: Lint
-      run: make lint
+    - name: golangci-lint
+      uses: golangci/golangci-lint-action@v6
+      with:
+        version: v1.60
 
     - name: Build
       run: make build
