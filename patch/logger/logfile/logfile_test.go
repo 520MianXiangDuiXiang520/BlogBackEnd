@@ -6,6 +6,7 @@ import (
 	"os"
 	"slices"
 	"testing"
+	"time"
 )
 
 func TestNewLogFile(t *testing.T) {
@@ -33,15 +34,18 @@ func TestNewLogFile_Split(t *testing.T) {
 	fileName := "./test/test.log"
 	f, err := NewLogFile(fileName, WithSplit(4))
 	assert.Nil(t, err)
+	time.Sleep(time.Nanosecond * 10)
 
 	data := []byte("test")
 	_, err = f.Write(data)
 	assert.Nil(t, err)
 
+	time.Sleep(time.Nanosecond * 10)
 	data = []byte("test test")
 	_, err = f.Write(data)
 	assert.Nil(t, err)
 
+	time.Sleep(time.Nanosecond * 10)
 	data = []byte("tes")
 	_, err = f.Write(data)
 	assert.Nil(t, err)
@@ -49,6 +53,7 @@ func TestNewLogFile_Split(t *testing.T) {
 	_, err = f.Write(data)
 	assert.Nil(t, err)
 
+	time.Sleep(time.Nanosecond * 10)
 	data = []byte("111")
 	_, err = f.Write(data)
 	assert.Nil(t, err)
