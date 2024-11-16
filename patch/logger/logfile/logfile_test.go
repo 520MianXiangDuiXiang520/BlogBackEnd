@@ -68,7 +68,7 @@ func TestNewLogFile_Split(t *testing.T) {
 	})
 
 	for _, entry := range infos {
-		fmt.Printf("%s\n", entry.Name())
+		fmt.Printf(" %s %s\n", entry.ModTime(), entry.Name())
 	}
 
 	expected := []string{"test", "test test", "testest", "111"}
