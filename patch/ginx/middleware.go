@@ -54,13 +54,13 @@ func CorsHandler(accessList []string) gin.HandlerFunc {
 
 		origin := context.GetHeader("Origin")
 		method := context.Request.Method
-		logger.Error("ssssssss", origin, method)
-		context.Writer.Header().Set("Access-Control-Allow-Origin", "*")
+		context.Writer.Header().Set("Access-Control-Allow-Origin", origin)
 		for _, allow := range accessList {
 			if allow == origin {
-				context.Header("Access-Control-Allow-Origin", origin)
+				//context.Header("Access-Control-Allow-Origin", origin)
 				break
 			}
+			logger.Error("not in access list", "origin", origin, "allow", allow)
 		}
 		context.Header("Access-Control-Allow-Methods", "POST, GET, OPTIONS")
 		context.Header("Access-Control-Allow-Headers", assessHeadersStr)
