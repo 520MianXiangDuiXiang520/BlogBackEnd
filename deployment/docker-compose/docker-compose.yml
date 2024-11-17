@@ -17,7 +17,6 @@ services:
       timeout: 10s
       retries: 5
       start_period: 40s
-    command: -config /etc/mongod.conf
 
   blog_server:
     container_name: blog_server
