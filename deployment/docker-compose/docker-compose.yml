@@ -10,7 +10,6 @@ services:
     restart: always
     volumes:
       - ~/Data/JuneBlog/data/mongo:/data/db
-      - ~/Data/JuneBlog/config/mongod.conf:/etc/mongod.conf
       - ~/Data/JuneBlog/log/mongo:/var/log/mongodb
     healthcheck:
       test: echo 'db.runCommand("ping").ok' | mongosh localhost:27017/test --quiet

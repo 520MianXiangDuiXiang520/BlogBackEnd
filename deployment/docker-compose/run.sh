@@ -14,7 +14,7 @@ tool_pre_check() {
 
 dir_pre_check() {
     readonly _data_dir="$HOME/Data/JuneBlog"
-    readonly _example_dir="./deployment/config"
+    readonly _example_dir="./config"
     [[ ! -d "$_data_dir/data/mongo" ]] && { mkdir -p "$_data_dir/data/mongo"; }
     [[ ! -d "$_data_dir/log/mongo" ]] && { mkdir -p "$_data_dir/log/mongo"; }
     [[ ! -d "$_data_dir/config" ]] && { mkdir -p "$_data_dir/config"; }
@@ -24,6 +24,7 @@ dir_pre_check() {
 tool_pre_check
 dir_pre_check
 
-cd deployment/docker-compose
+cd ./docker-compose
+docker-compose down
 docker-compose up -d
 cd -
