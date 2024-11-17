@@ -10,7 +10,8 @@ import (
 
 type Config struct {
 	*Common
-	Db DbConfig `json:"db"`
+	Db       DbConfig `json:"db"`
+	CORSList []string `json:"cors_list"`
 }
 
 func NewConfig() *Config {
