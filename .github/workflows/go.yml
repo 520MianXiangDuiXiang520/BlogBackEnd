@@ -116,7 +116,8 @@ jobs:
           SCRIPT_AFTER: |
             whoami
             ls -al
-            cd ${{ secrets.REMOTE_TARGET }}
+            cd ${{ secrets.REMOTE_TARGET }}/docker-compose
+            docker login -u ${{ secrets.DOCKER_USERNAME }} -p ${{ secrets.DOCKER_PASSWORD }}
             docker-compose up -d
           SCRIPT_AFTER_REQUIRED: true
             

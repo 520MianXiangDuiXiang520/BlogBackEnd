@@ -22,7 +22,7 @@ services:
 
   blog_server:
     container_name: blog_server
-    image: blogapi
+    image: junebao857/blogapi:main
     ports:
       - "8080:8080"
     restart: always
