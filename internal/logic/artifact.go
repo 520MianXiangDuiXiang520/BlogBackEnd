@@ -22,6 +22,7 @@ func ArticleListReq(ctx context.Context, page, pageSize int, _ message.None) (re
 	opts := []opt.Opt{
 		opt.WithPage(int64(page)),
 		opt.WithPageSize(int64(pageSize)),
+		opt.WithOrderBy("id", true),
 	}
 	if tag > 0 {
 		tagOpt := opt.WithFilter(opt.In("tag_ids", []int32{tag}))

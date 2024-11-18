@@ -39,7 +39,11 @@ func (m *Mgo) FindSomeArticleInfo(ctx context.Context, opts ...opt.Opt) ([]*modu
 		fOpts.SetLimit(cc.PageSize)
 	}
 	if cc.OrderBy != "" {
-		fOpts.SetSort(bson.M{cc.OrderBy: 1})
+		desc := 1
+		if cc.OrderDesc {
+			desc = -1
+		}
+		fOpts.SetSort(bson.M{cc.OrderBy: desc})
 	}
 	fOpts.SetProjection(onlyHeaderOpt)
 	filter := cc.ApplyFilter()

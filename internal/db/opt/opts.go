@@ -3,10 +3,11 @@ package opt
 import "go.mongodb.org/mongo-driver/bson"
 
 type Ctx struct {
-	Page     int64
-	PageSize int64
-	Filter   Filter
-	OrderBy  string
+	Page      int64
+	PageSize  int64
+	Filter    Filter
+	OrderBy   string
+	OrderDesc bool
 }
 
 func (c *Ctx) ApplyFilter() bson.M {
@@ -28,9 +29,10 @@ func NewAndApplyCtx(opts ...Opt) *Ctx {
 
 type Opt func(ctx *Ctx)
 
-func WithOrderBy(field string) Opt {
+func WithOrderBy(field string, desc bool) Opt {
 	return func(ctx *Ctx) {
 		ctx.OrderBy = field
+		ctx.OrderDesc = desc
 	}
 }
 
