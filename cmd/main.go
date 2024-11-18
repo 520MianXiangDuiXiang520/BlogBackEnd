@@ -47,7 +47,13 @@ func (l *JuneBlog) PreStart() error {
 }
 
 func (l *JuneBlog) Start() error {
-	return l.engine.Run()
+	addr := config.G.GetStrWithDefault(config.CommonKeyAddr, ":8080")
+	cert := config.G.GetStrWithDefault(config.CommonKeyTLSCertFile, "")
+	key := config.G.GetStrWithDefault(config.CommonKeuTLSKeyFile, "")
+	if cert == "" || key == "" {
+		return l.engine.Run(addr)
+	}
+	return l.engine.RunTLS(addr, cert, key)
 }
 
 func (l *JuneBlog) PreStop() error {

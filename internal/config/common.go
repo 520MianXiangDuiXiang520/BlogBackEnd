@@ -6,6 +6,9 @@ const (
 	CommonKeyAbstractLen   CommonKey = "abstract_len"
 	CommonKeyAdminPassword CommonKey = "admin_password"
 	CommonKeyAdminUsername CommonKey = "admin_username"
+	CommonKeyAddr          CommonKey = "addr"
+	CommonKeyTLSCertFile   CommonKey = "tls_cert_file"
+	CommonKeuTLSKeyFile    CommonKey = "tls_key_file"
 )
 
 type Common struct {
