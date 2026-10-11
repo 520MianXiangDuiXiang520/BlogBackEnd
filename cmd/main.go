@@ -6,8 +6,10 @@ import (
 	"JuneBlog/internal/db"
 	"JuneBlog/internal/env"
 	"JuneBlog/internal/initialization"
+	"JuneBlog/internal/sitemap"
 	"JuneBlog/patch/logger"
 	"JuneBlog/patch/node"
+	"context"
 	"github.com/gin-gonic/gin"
 	"log/slog"
 )
@@ -36,6 +38,12 @@ func (l *JuneBlog) PreStart() error {
 	err = db.InitDatabase()
 	if err != nil {
 		return err
+	}
+
+	// Initialize the sitemap on startup so an old placeholder is replaced
+	// immediately after deployment, before the next article mutation.
+	if err := sitemap.Generate(context.Background()); err != nil {
+		logger.Error("Sitemap: initial generation failed", "err", err)
 	}
 
 	// init server
