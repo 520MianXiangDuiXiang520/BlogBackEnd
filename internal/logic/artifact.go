@@ -7,6 +7,7 @@ import (
 	"JuneBlog/internal/db/module"
 	"JuneBlog/internal/db/opt"
 	"JuneBlog/internal/message"
+	"JuneBlog/internal/sitemap"
 	"JuneBlog/internal/utils"
 	"JuneBlog/patch/ginx"
 	"JuneBlog/patch/logger"
@@ -93,6 +94,9 @@ func NewArtifactReq(ctx context.Context, req message.NewArticleReq) (resp *messa
 		logger.Error("Article: NewArticle fail", "err", err)
 		return nil, err
 	}
+	if err := sitemap.Generate(ctx); err != nil {
+		logger.Error("Article: generate sitemap after create failed", "err", err)
+	}
 	return &message.RespOK, nil
 }
 
@@ -137,6 +141,9 @@ func ArticleUpdateReq(
 		logger.Error("Article: UpdateArticle fail", "err", err)
 		return nil, err
 	}
+	if err := sitemap.Generate(ctx); err != nil {
+		logger.Error("Article: generate sitemap after update failed", "err", err)
+	}
 	return &message.RespOK, nil
 }
 
@@ -147,6 +154,9 @@ func ArticleDeleteReq(
 	if err != nil {
 		logger.Error("Article: DeleteArticle fail", "err", err, "id", id)
 		return nil, err
+	}
+	if err := sitemap.Generate(ctx); err != nil {
+		logger.Error("Article: generate sitemap after delete failed", "err", err)
 	}
 	return &message.RespOK, nil
 }

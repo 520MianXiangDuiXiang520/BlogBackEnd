@@ -9,6 +9,7 @@ const (
 	CommonKeyAddr          CommonKey = "addr"
 	CommonKeyTLSCertFile   CommonKey = "tls_cert_file"
 	CommonKeuTLSKeyFile    CommonKey = "tls_key_file"
+	CommonKeySitemapPath   CommonKey = "sitemap_path"
 )
 
 type Common struct {

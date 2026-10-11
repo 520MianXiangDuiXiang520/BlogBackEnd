@@ -27,6 +27,7 @@ services:
     volumes:
       - ~/Data/JuneBlog/config:/data/juneblog/config/
       - ~/Data/JuneBlog/log:/data/juneblog/log/
+      - ~/Data/JuneBlog/frontend/www:/data/juneblog/frontend/www/
     environment:
       - CFG_PATH=/data/juneblog/config/config.json
       - LOG_PATH=/data/juneblog/log
